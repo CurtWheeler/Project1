@@ -17,12 +17,7 @@ public class Calculator extends JFrame implements ActionListener {
 	private JButton[] button = new JButton[20];
 	private String[] keys = { "", "", "≡", "C", "7", "8", "9", "/", "4", "5",
 			"6", "*", "1", "2", "3", "-", "0", ".", "=", "+", };
-	private int W, H;
 	private String numStr = "";
-	private boolean isLogMode;
-	private JMenuBar menu;
-	private JMenu logger;
-	private JMenuItem on, off;
 	private Container p;
 	private int x, y;
 
@@ -225,8 +220,8 @@ public class Calculator extends JFrame implements ActionListener {
 	}
 
 	private String evaluate(String s) {
-		s = s.replaceAll("[a-z]", "");
-		s = s.replaceAll("[A-Z]", "");
+//		s = s.replaceAll("[a-z]", "");
+//		s = s.replaceAll("[A-Z]", "");
 
 		logVals[0][0] = s;
 
