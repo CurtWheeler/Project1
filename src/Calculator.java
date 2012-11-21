@@ -16,7 +16,7 @@ public class Calculator extends JFrame implements ActionListener {
 	DefaultTableModel logModel = new DefaultTableModel();
 	private String logCols[] = { "Log" };
 	private String logVals[][] = { { "" } };
-	private String numStr = "";
+	private String inputStr = "";
 	private int btnX, btnY;
 
 	// feature add-on
@@ -25,7 +25,7 @@ public class Calculator extends JFrame implements ActionListener {
 	private void LogTable() {
 
 		// reset display text
-		numStr = "";
+		inputStr = "";
 		displayText.setText("");
 		// set window size
 		setSize(235, 405);
@@ -229,7 +229,7 @@ public class Calculator extends JFrame implements ActionListener {
 					p.validate();
 					p.repaint();
 				}
-				numStr = "";
+				inputStr = "";
 				displayText.setText("");
 			}
 		});
@@ -241,7 +241,7 @@ public class Calculator extends JFrame implements ActionListener {
 				if (key == KeyEvent.VK_ENTER) {
 					String resultStr = evaluate(displayText.getText());
 					displayText.setText(resultStr);
-					numStr = resultStr;
+					inputStr = resultStr;
 				}
 				if (key == 127) {
 					displayText.setText("");
@@ -285,15 +285,15 @@ public class Calculator extends JFrame implements ActionListener {
 		case '='://evaluate expression
 			resultStr = evaluate(displayText.getText());
 			displayText.setText(resultStr);
-			numStr = resultStr;
+			inputStr = resultStr;
 			break;
 		case 'C'://clear display
 			displayText.setText("");
-			numStr = "";
+			inputStr = "";
 			break;
 		default://add text to display
-			numStr = displayText.getText() + ch;
-			displayText.setText(numStr);
+			inputStr = displayText.getText() + ch;
+			displayText.setText(inputStr);
 		}
 		//always focus back, for pressed keys
 		displayText.requestFocusInWindow();
@@ -303,7 +303,7 @@ public class Calculator extends JFrame implements ActionListener {
 		//clear alpha characters from string (if you wish)
 		// s = s.replaceAll("[a-z]", "");
 		// s = s.replaceAll("[A-Z]", "");
-
+		
 		logVals[0][0] = s;
 		Interpreter i = new Interpreter();
 		try {
@@ -313,18 +313,18 @@ public class Calculator extends JFrame implements ActionListener {
 		}
 		try {
 			//evaluate expression
-			numStr = String.valueOf(i.get("result"));
+			inputStr = String.valueOf(i.get("result"));
 		} catch (EvalError e) {
 			// e.printStackTrace();
 		}
 
-		if (isNotNullorEmpty(numStr)) {
+		if (isNotNullorEmpty(inputStr)) {
 			//insert row in logger
-			logModel.insertRow(0, new Object[] { s + " = " + numStr });
+			logModel.insertRow(0, new Object[] { s + " = " + inputStr });
 		}
 		//refocus
 		displayText.requestFocusInWindow();
-		return numStr;
+		return inputStr;
 	}
 
 	public static boolean isNotNullorEmpty(final String string) {
